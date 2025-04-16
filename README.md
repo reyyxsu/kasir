@@ -1,4 +1,6 @@
 # kasir
 
-username: admin
-password: 123
+<html>
+	<p><b>Username: admin</b></p>
+	<p><b>Password: 123</b></p>
+</html>

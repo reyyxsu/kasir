@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2025 at 05:25 PM
+-- Generation Time: Apr 16, 2025 at 02:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,6 +41,14 @@ CREATE TABLE `barang` (
   `tgl_update` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`id`, `id_barang`, `id_kategori`, `nama_barang`, `merk`, `harga_beli`, `harga_jual`, `satuan_barang`, `stok`, `tgl_input`, `tgl_update`) VALUES
+(9, 'BR001', 8, 'Pulpen', 'Snowman', '6000', '10000', 'PCS', '97', '16 April 2025, 15:42', NULL),
+(10, 'BR002', 9, 'Mie Instan', 'Mie Goreng', '2500', '4000', 'PCS', '80', '16 April 2025, 15:42', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -58,10 +66,8 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`, `tgl_input`) VALUES
-(1, 'ATK', '7 May 2017, 10:23'),
-(5, 'Sabun', '7 May 2017, 10:28'),
-(6, 'Snack', '6 October 2020, 0:19'),
-(7, 'Minuman', '6 October 2020, 0:20');
+(8, 'ATK', '16 April 2025, 15:40'),
+(9, 'Makanan', '16 April 2025, 15:40');
 
 -- --------------------------------------------------------
 
@@ -81,7 +87,7 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`id_login`, `user`, `pass`, `id_member`) VALUES
-(1, 'admin', '6cd5e746d79f0ad2e835f386e56292eb', 1);
+(1, 'admin', '202cb962ac59075b964b07152d234b70', 1);
 
 -- --------------------------------------------------------
 
@@ -123,6 +129,17 @@ CREATE TABLE `nota` (
   `tanggal_input` date NOT NULL DEFAULT curdate(),
   `periode` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `nota`
+--
+
+INSERT INTO `nota` (`id_nota`, `id_barang`, `id_member`, `jumlah`, `total`, `diskon`, `total_akhir`, `tanggal_input`, `periode`) VALUES
+(51, 'BR001', 1, 10, 30000, 20, 24000, '2025-04-16', '04-2025'),
+(52, 'BR001', 1, 10, 30000, 0, 30000, '2025-04-16', '04-2025'),
+(53, 'BR001', 1, 5, 15000, 0, 15000, '2025-04-16', '04-2025'),
+(54, 'BR001', 1, 3, 30000, 0, 30000, '2025-04-16', '04-2025'),
+(55, 'BR002', 1, 20, 80000, 25, 60000, '2025-04-16', '04-2025');
 
 -- --------------------------------------------------------
 
@@ -214,13 +231,13 @@ ALTER TABLE `toko`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -238,13 +255,13 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `toko`

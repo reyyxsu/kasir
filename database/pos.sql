@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2025 at 02:28 PM
+-- Generation Time: Apr 18, 2025 at 05:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -41,14 +41,6 @@ CREATE TABLE `barang` (
   `tgl_update` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `barang`
---
-
-INSERT INTO `barang` (`id`, `id_barang`, `id_kategori`, `nama_barang`, `merk`, `harga_beli`, `harga_jual`, `satuan_barang`, `stok`, `tgl_input`, `tgl_update`) VALUES
-(9, 'BR001', 8, 'Pulpen', 'Snowman', '6000', '10000', 'PCS', '97', '16 April 2025, 15:42', NULL),
-(10, 'BR002', 9, 'Mie Instan', 'Mie Goreng', '2500', '4000', 'PCS', '80', '16 April 2025, 15:42', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -60,14 +52,6 @@ CREATE TABLE `kategori` (
   `nama_kategori` varchar(255) NOT NULL,
   `tgl_input` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `kategori`
---
-
-INSERT INTO `kategori` (`id_kategori`, `nama_kategori`, `tgl_input`) VALUES
-(8, 'ATK', '16 April 2025, 15:40'),
-(9, 'Makanan', '16 April 2025, 15:40');
 
 -- --------------------------------------------------------
 
@@ -130,17 +114,6 @@ CREATE TABLE `nota` (
   `periode` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `nota`
---
-
-INSERT INTO `nota` (`id_nota`, `id_barang`, `id_member`, `jumlah`, `total`, `diskon`, `total_akhir`, `tanggal_input`, `periode`) VALUES
-(51, 'BR001', 1, 10, 30000, 20, 24000, '2025-04-16', '04-2025'),
-(52, 'BR001', 1, 10, 30000, 0, 30000, '2025-04-16', '04-2025'),
-(53, 'BR001', 1, 5, 15000, 0, 15000, '2025-04-16', '04-2025'),
-(54, 'BR001', 1, 3, 30000, 0, 30000, '2025-04-16', '04-2025'),
-(55, 'BR002', 1, 20, 80000, 25, 60000, '2025-04-16', '04-2025');
-
 -- --------------------------------------------------------
 
 --
@@ -155,6 +128,13 @@ CREATE TABLE `penjualan` (
   `total` varchar(255) NOT NULL,
   `tanggal_input` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+INSERT INTO `penjualan` (`id_penjualan`, `id_barang`, `id_member`, `jumlah`, `total`, `tanggal_input`) VALUES
+(23, 'BR001', 1, '2', '20000', '18 April 2025, 9:41');
 
 -- --------------------------------------------------------
 
@@ -255,13 +235,13 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `toko`

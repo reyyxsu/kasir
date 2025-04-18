@@ -1,49 +1,82 @@
-<?php 
-@ob_start();
-session_start();
-if(!empty($_SESSION['admin'])){ }else{
-	echo '<script>window.location="login.php";</script>';
-	exit;
-}
-require 'koneksi.php';
-include $view;
-$lihat = new view($config);
-
-// AMANKAN DATA
-$toko = $lihat->toko() ?: ['nama_toko' => '-', 'alamat_toko' => '-'];
-$hsl = $lihat->penjualan() ?: [];
-
-?>
 <html>
 <head>
-	<title>print</title>
-	<link rel="stylesheet" href="assets/css/bootstrap.css">
-</head>
-<body>
-<script>window.print();</script>
-<div class="container">
-	<div class="row">
-		<div class="col-sm-4"></div>
-		<div class="col-sm-4">
-			<center>
-				<p><?php echo $toko['nama_toko']; ?></p>
-				<p><?php echo $toko['alamat_toko']; ?></p>
-				<p>Tanggal : <?php echo date("j F Y, G:i"); ?></p>
-				<p>Kasir : <?php echo htmlentities($_GET['nm_member'] ?? '-'); ?></p>
-			</center>
-			<table class="table table-bordered" style="width:100%;">
+    <title>Struk Pembelian</title>
+		<style>
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 11px;
+			width: 58mm;
+			margin: auto;
+		}
+		.text-center {
+			text-align: center;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+		}
+		td, th {
+			padding: 3px 0;
+		}
+		.line {
+			border-bottom: 1px dashed #000;
+			margin: 5px 0;
+		}
+		.totals {
+			margin-top: 10px;
+		}
+		@media print {
+			body {
+                width: auto;
+                margin: 0;
+            }
+		}
+	</style>
+
+		</head>
+		<body onload="window.print()">
+		<?php 
+		@ob_start();
+		session_start();
+		if (!empty($_SESSION['admin'])) {} else {
+			echo '<script>window.location="login.php";</script>';
+			exit;
+		}
+		require 'koneksi.php';
+		include $view;
+		$lihat = new view($config);
+
+		$toko = $lihat->toko() ?: ['nama_toko' => '-', 'alamat_toko' => '-'];
+		$hsl = $lihat->penjualan() ?: [];
+
+		$total_sebelum_diskon = 0;
+		$total_setelah_diskon = 0;
+		?>
+
+		<div class="text-center">
+			<strong><?php echo $toko['nama_toko']; ?></strong><br>
+			<?php echo $toko['alamat_toko']; ?><br>
+			Tanggal: <?php echo date("j F Y, G:i"); ?><br>
+			Kasir: <?php echo htmlentities($_GET['nm_member'] ?? '-'); ?>
+		</div>
+
+		<div class="line"></div>
+
+		<table>
+			<thead>
 				<tr>
-					<td>No.</td>
-					<td>Barang</td>
-					<td>Jumlah</td>
-					<td>Total</td>
+					<th>No</th>
+					<th>Barang</th>
+					<th>Jml</th>
+					<th>Total</th>
 				</tr>
+			</thead>
+			<tbody>
 				<?php 
 				$no = 1;
-				$total_sebelum_diskon = 0;
-				$total_setelah_diskon = 0;
 				foreach ($hsl as $isi) {
-					$diskon = isset($isi['diskon']) ? $isi['diskon'] : 0;
+					$diskon = $isi['diskon'] ?? 0;
 					$harga_sebelum = $isi['total'];
 					$harga_setelah = $harga_sebelum - ($diskon / 100 * $harga_sebelum);
 					$total_sebelum_diskon += $harga_sebelum;
@@ -56,22 +89,41 @@ $hsl = $lihat->penjualan() ?: [];
 					<td><?php echo number_format($isi['total']); ?></td>
 				</tr>
 				<?php } ?>
-			</table>
+			</tbody>
+		</table>
 
-			<div class="pull-right">
-			<b>Total Sebelum Diskon:</b> Rp.<?php echo number_format($total_sebelum_diskon); ?><br/>
-			<b>Diskon:</b> <?php echo ($_GET['diskon'] ?? 0); ?>%<br/>
-			<b>Total Setelah Diskon:</b> Rp.<?php echo number_format($_GET['total_akhir'] ?? $total_setelah_diskon); ?><br/>
-			<b>Bayar:</b> Rp.<?php echo number_format($_GET['bayar'] ?? 0); ?><br/>
-			<b>Kembali:</b> Rp.<?php echo number_format($_GET['kembali'] ?? 0); ?>
-			</div>
-			<div class="clearfix"></div>
-			<center>
-				<p>Terima Kasih Telah berbelanja di toko kami !</p>
-			</center>
+		<div class="line"></div>
+
+		<div class="totals">
+			<table>
+				<tr>
+					<td>Total Sebelum Diskon</td>
+					<td align="right">Rp. <?php echo number_format($total_sebelum_diskon); ?></td>
+				</tr>
+				<tr>
+					<td>Diskon</td>
+					<td align="right"><?php echo ($_GET['diskon'] ?? 0); ?>%</td>
+				</tr>
+				<tr>
+					<td>Total Setelah Diskon</td>
+					<td align="right">Rp. <?php echo number_format($_GET['total_akhir'] ?? $total_setelah_diskon); ?></td>
+				</tr>
+				<tr>
+					<td>Bayar</td>
+					<td align="right">Rp. <?php echo number_format($_GET['bayar'] ?? 0); ?></td>
+				</tr>
+				<tr>
+					<td>Kembali</td>
+					<td align="right">Rp. <?php echo number_format($_GET['kembali'] ?? 0); ?></td>
+				</tr>
+			</table>
 		</div>
-		<div class="col-sm-4"></div>
-	</div>
-</div>
-</body>
-</html>
+
+		<div class="line"></div>
+
+		<div class="text-center">
+			Terima Kasih Telah Berbelanja di Toko Kami!
+		</div>
+
+		</body>
+		</html>

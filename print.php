@@ -31,7 +31,7 @@ $hsl = $lihat->penjualan() ?: [];
 				<p>Tanggal : <?php echo date("j F Y, G:i"); ?></p>
 				<p>Kasir : <?php echo htmlentities($_GET['nm_member'] ?? '-'); ?></p>
 			</center>
-			<table border="1" class="table table-bordered" style="width:100%;">
+			<table class="table table-bordered" style="width:100%;">
 				<tr>
 					<td>No.</td>
 					<td>Barang</td>
